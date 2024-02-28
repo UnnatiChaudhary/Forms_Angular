@@ -1,0 +1,74 @@
+<div class="container">
+  <p *ngIf="!dataPresent">No Data Present for Updation</p>
+    <div class="row" *ngIf="dataPresent">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+          <form #f="ngForm" (ngSubmit)="OnSubmit()">
+            <div
+              id="user-data"
+              ngModelGroup="userData"
+              #userData="ngModelGroup">
+              <div class="form-group">
+                <label for="name">Updated Username :  </label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  ngModel
+                  name="name"
+                  #name="ngModel"
+                  maxlength="30">
+              </div>
+            <br>
+              <div class="form-group">
+                <label for="age">Updated Age :  </label>
+                <input
+                  type="number"
+                  id="age"
+                  class="form-control"
+                  ngModel
+                  name="age"
+                  #age="ngModel">
+              </div>
+            <br>
+            <div class="radio" *ngFor="let gender of genders">
+              <label> 
+                <input
+                  type="radio"
+                  name="gender"
+                  ngModel
+                  [value]="gender"
+                  #gender="ngModel">
+                {{ gender }}
+              </label>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="age">Updated Description :  </label>
+              <textarea
+                type="text"
+                id="description"
+                class="form-control"
+                ngModel
+                name="description"
+                rows="6" cols="30" >
+                </textarea>
+            </div>
+            <br><br>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="!f.valid">Submit</button>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div class="row" *ngIf="submitted">
+          <div class="col-xs-12">
+            <h3>Updated Data :</h3>
+            <p *ngIf="user.name">Username: {{ user.name }}</p>
+            <p *ngIf="user.age">Age: {{ user.age }}</p>
+            <p *ngIf="user.gender">Gender: {{ user.gender }}</p>
+            <p *ngIf="user.description">Description: {{ user.description }}</p>
+          </div>
+        </div>
+      </div>

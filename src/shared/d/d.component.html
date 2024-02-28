@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form #f="ngForm" (ngSubmit)="OnSubmit()">
+          <div
+            id="user-data"
+            ngModelGroup="userData"
+            #userData="ngModelGroup">
+            <div class="form-group" >
+              <label for="name">Username : </label>
+               <div>
+                <input
+                type="text"
+                id="name"
+                class="form-control"
+                ngModel
+                name="name"
+                #name="ngModel"
+                [(ngModel)]="userA.name"
+                placeholder="{{user.name}}"
+                required
+                appUsernameLength
+                [readOnly]="id=='2'" autocomplete="off">
+                  <span class="help-block" *ngIf="((name.invalid&&name.touched)||reload||name.value?.length>30)&&id=='1'" style="color: red;">Please enter a valid name</span>
+              </div>
+            </div>
+          <br>
+            <div class="form-group">
+              <label for="age">Age :  </label>
+               <div>
+                <input
+                type="number"
+                id="age"
+                class="form-control"
+                ngModel
+                name="age"
+                #age="ngModel"
+                required
+                [(ngModel)]="userA.age"
+                placeholder="{{user.age}}"
+                appUsernameLength 
+                [readOnly]="id=='2'" autocomplete="off">
+                <span class="help-block" *ngIf="((!age.valid && age.touched)||reload)&&id=='1'" style="color: red;">Please enter Age</span>
+               </div>
+            </div>
+          <br>
+         <div *ngIf="id=='1'">
+          <div class="radio" *ngFor="let gender of genders">
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                ngModel
+                [value]="gender"
+                required>
+              {{ gender }}
+            </label>
+          </div>
+         </div>
+         <div class="radio" *ngIf="id=='2'">
+          <label>
+            <input type="radio" name="gender" value="male" [checked]="user.gender === 'male'" disabled> male
+          </label><br>
+          <label>
+            <input type="radio" name="gender" value="female" [checked]="user.gender === 'female'" disabled> female
+          </label>
+         </div>
+          <br>
+          <div class="form-group">
+            <label for="age">Description :  </label>
+            <textarea
+              type="text"
+              id="description"
+              class="form-control"
+              ngModel
+              name="description"
+              placeholder="{{user.description}}"
+              [(ngModel)]="userA.description"
+              rows="6" cols="30"
+              [readOnly]="id=='2'">
+          </textarea>
+          </div>
+          <br><br>
+          <div *ngIf="id=='1'">
+            <button
+            class="btn btn-primary"
+            type="submit"
+            id="submitButton"
+            [disabled]="(!f.valid || (name.value?.length>30) || submitted)">Submit</button>
+            <button class="btn btn-primary" type="button" (click)="onReset()">Reset</button>
+            <button class="btn btn-primary" type="button" (click)="onChange()">Change</button>
+          </div>
+  
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr>
+   <div class="container">
+    <div class="row" *ngIf="data">
+      <div class="col-xs-12" *ngFor="let user of users;let i=index">
+        <h3>{{i+1}}:</h3>
+        <p>Username: {{ user.name }}</p>
+        <p>Age: {{ user.age }}</p>
+        <p>Gender: {{ user.gender }}</p>
+        <p *ngIf="user.description">Description: {{ user.description }}</p>
+      </div>
+    </div>
+   </div>
+  </div>

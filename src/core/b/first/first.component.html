@@ -1,0 +1,107 @@
+<ng-container *ngIf="isDataPresent ; else elseBlock">
+  <div>
+    <p>Your Data : </p>
+   </div>
+   <br>
+   <!-- <table class="table">
+       <thead>
+         <tr>
+           <th scope="col">Index</th>
+           <th scope="col">Name</th>
+           <th scope="col">Age</th>
+           <th scope="col">Gender</th>
+           <th scope="col">Description</th>
+           <th scope="col"><span style="color: red;">Delete</span></th>
+           <th scope="col"><span style="color: green;">Edit</span></th>
+         </tr>
+       </thead>
+       <tbody *ngFor="let user of users;let i=index">
+        
+             <tr *ngIf="normal">
+               <th scope="row">{{i+1}}</th>
+               <td>{{user?.name}}</td>
+               <td>{{user?.age}}</td>
+               <td>{{user?.gender}}</td>
+               <td>{{user?.description}}</td>
+               <td><button type="button" (click)="localStorageDelete()" class="btn btn-danger">Delete</button></td>
+               <td><button type="button" (click)="localStorageEdit()" class="btn btn-primary">Edit</button></td>
+             </tr>
+             <ng-container *ngFor="let userData of user | filter">
+               <tr>
+                 <th scope="row">{{i+1}}</th>
+                 <td>{{ userData?.name || '' }}</td>
+                 <td>{{ userData?.age || '' }}</td>
+                 <td>{{ userData?.gender || '' }}</td>
+                 <td>{{ userData?.description || '' }}</td>
+                 <td><button type="button" (click)="HttpDelete(users[i]?.id)" class="btn btn-danger">Delete</button></td>
+               <td><button type="button" (click)="HttpEdit(users[i]?.id)" class="btn btn-primary">Edit</button></td>
+               </tr>
+             </ng-container>
+       </tbody>
+      </table> -->
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort  matPaginator #paginator>
+
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>Index</th>
+          <td mat-cell *matCellDef="let user; let i = index">{{ i + 1}}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let user">{{ user.data[0]?.name }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef>Age</th>
+          <td mat-cell *matCellDef="let user">{{ user.data[0]?.age }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef>Gender</th>
+          <td mat-cell *matCellDef="let user">{{ user.data[0]?.gender }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let user">{{ user.data[0]?.description }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>Delete</th>
+          <td mat-cell *matCellDef="let user">
+            <button type="button" (click)="HttpDelete(user?.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef>Edit</th>
+          <td mat-cell *matCellDef="let user">
+            <button type="button" (click)="HttpEdit(user?.id)" class="btn btn-primary">Edit</button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let user; columns: displayedColumns"></tr>
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[2, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+
+     <br><br><br><br>
+     <div>
+       <button type="button" class="btn btn-primary" >Is there anyone above age 40 :  {{above}} </button>
+     </div><br><br>
+</ng-container>
+<ng-template #elseBlock>
+  {{data}}
+  <hr>
+</ng-template>
+
+<div>
+  <button type="button" (click)="onSave()" class="btn btn-success">Save</button>
+</div>
+
+
+  
+
